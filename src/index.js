@@ -12,8 +12,8 @@ const el = {
 }
 
 
-const API = "https://pixabay.com/api"
-const KEY = "key=40269425-bc1c5bc659d3defa30c23ed22"
+const API = "https://pixabay.com/api/";
+const KEY = "key=40269425-bc1c5bc659d3defa30c23ed22";
 let page = 1
 const perPage = 40
 let totalHits = 460
@@ -25,33 +25,21 @@ e.preventDefault()
 
 const inquiry = el.form.searchQuery.value
 
-// await axios.get(`${API}?${KEY}&q=${inquiry}&image_type=photo&per_page=${perPage}&page=${page}`)
-// .then(data => {
-// return console.log(data);
-// })
 
 try {
-  const response = await fetchToData(inquiry, perPage)
+  const response = await fetchToData(inquiry)
+  console.log(response)
   if (response.total === 0) {
  throw new Error('NO')
   }
   el.btnLoadMore.classList.remove('js-hiden')
-  console.log(response);
 el.gallery.innerHTML = makeMarkup(response)
 } catch (error) {
   console.error(error);
 }
 
-
-
-
 lightbox.refresh()
-
-
-
-
 })
-
 
 el.btnLoadMore.addEventListener("click", async (e) => {
 e.preventDefault()
@@ -59,7 +47,6 @@ console.log("click");
 el.btnLoadMore.classList.add('js-hiden')
 const inquiry = el.form.searchQuery.value
 totalHits -= perPage
-
 
 if (totalHits < perPage) {
   const response = await fetchToData(inquiry, totalHits)
@@ -76,16 +63,11 @@ console.log(totalHits, perPage);
 el.gallery.insertAdjacentHTML("beforeend", makeMarkup(response))
 }
 
-
 lightbox.refresh()
 
 })
 
-
-
-
-
-
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 
