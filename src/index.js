@@ -33,6 +33,7 @@ try {
  throw new Error('NO')
   }
   el.btnLoadMore.classList.remove('js-hiden')
+  console.log(makeMarkup(response));
 el.gallery.innerHTML = makeMarkup(response)
 } catch (error) {
   console.error(error);

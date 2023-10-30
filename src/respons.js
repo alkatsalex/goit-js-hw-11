@@ -21,8 +21,8 @@ export async function fetchToData(q, page) {
       const { hits } = card
       page+=1
       console.log(hits);
-      markup =  hits.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
-        return `<div class="photo-card">
+     return markup =  hits.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
+        `<div class="photo-card">
         <a class="link" href="${largeImageURL}">
           <img class="photo" src="${webformatURL}" alt="${tags}" data-source="${largeImageURL}"  loading="lazy" />
         <div class="info">
@@ -46,6 +46,5 @@ export async function fetchToData(q, page) {
         </a>
         </div>`
 }).join("")
-    return markup
     }
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
