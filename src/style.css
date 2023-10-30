@@ -13,7 +13,7 @@
     align-items: center; 
 justify-content: center;
 
-    width: 1200px;
+    width: 350px;
     margin: 0 auto;
     padding-top: 25px;
     padding-bottom: 25px;
@@ -23,27 +23,36 @@ justify-content: center;
 .search-form{
     margin: 0, auto;
 
+
 }
 
 
 .photo-card {
-    width: 250px;
-    border: 1px solid;
-    border-radius:10% ;
-
+    width: 130px;
+margin-bottom: 10px;
 }
+@media screen and (min-width: 1200px) {
+    .photo-card {
+        width: 250px;
+    }
+  }
 
 .photo {
-    width: 250px;
+    width: 130px;
 
-    border-top-right-radius:10% ;
-    border-top-left-radius:10% ;
 }
+
+@media screen and (min-width: 1200px) {
+    .photo {
+        width: 250px;
+    }
+  }
 
 .info {
     display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
+
+    gap: 10px;
+
 }
 
 .info-item {
