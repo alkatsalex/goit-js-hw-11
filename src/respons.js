@@ -2,7 +2,7 @@ import axios from "axios"
 import { totalHits } from "./index.js";
 
 
-export const perPage = 200
+export const perPage = 40
 
 
 const API = "https://pixabay.com/api/";
@@ -21,9 +21,8 @@ export async function fetchToData(q, page, perPage) {
 }
     
    export function makeMarkup(card) {
-      const { hits } = card
+      // const { hits } = card
       totalHits -= perPage
-      console.log(hits);
 return card.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
         return `<div class="photo-card">
         <a class="link" href="${largeImageURL}">

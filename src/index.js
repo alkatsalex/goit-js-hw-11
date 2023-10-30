@@ -29,7 +29,7 @@ page =1
     totalHits = 500
 try {
   const response = await fetchToData(inquiry, page, perPage)
-//   console.log(response)
+
   if (response.data.total === 0) {
     Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
   }
@@ -41,6 +41,7 @@ try {
   el.btnLoadMore.classList.remove('js-hiden')
 
 el.gallery.innerHTML = makeMarkup(response.data.hits)
+Notiflix.Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
 } catch (error) {
     Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
 }
@@ -52,7 +53,6 @@ lightbox.refresh()
 
 el.btnLoadMore.addEventListener("click", async (e) => {
 e.preventDefault()
-console.log("click");
 el.btnLoadMore.classList.add('js-hiden')
 const inquiry = el.form.searchQuery.value
 
@@ -71,15 +71,25 @@ if (totalHits < perPage) {
 const res = await fetchToData(inquiry, page, perPage)
 
 el.btnLoadMore.classList.remove('js-hiden')
-console.log(totalHits, perPage);
 el.gallery.insertAdjacentHTML("beforeend", makeMarkup(res.data.hits))
 
 lightbox.refresh()
+
+
+const { height: cardHeight } = el.gallery.firstElementChild.getBoundingClientRect();
+
+        window.scrollBy({
+            top: cardHeight * 2,
+            behavior: "smooth",
+        });
 
 } catch (error) {
     el.btnLoadMore.classList.add('js-hiden');
     Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
 }
+
+
+
 
 })
 
