@@ -25,6 +25,10 @@ e.preventDefault()
 
 const inquiry = el.form.searchQuery.value
 
+// await axios.get(`${API}?${KEY}&q=${inquiry}&image_type=photo&per_page=${perPage}&page=${page}`)
+// .then(data => {
+// return console.log(data);
+// })
 
 try {
   const response = await fetchToData(inquiry)
@@ -33,14 +37,15 @@ try {
  throw new Error('NO')
   }
   el.btnLoadMore.classList.remove('js-hiden')
-  console.log(makeMarkup(response));
 el.gallery.innerHTML = makeMarkup(response)
 } catch (error) {
   console.error(error);
 }
 
 lightbox.refresh()
+
 })
+
 
 el.btnLoadMore.addEventListener("click", async (e) => {
 e.preventDefault()
