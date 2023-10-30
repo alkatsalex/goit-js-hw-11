@@ -24,25 +24,25 @@ justify-content: center;
 
 
 .photo-card {
-    width: 130px;
+    width: 250px;
 margin-bottom: 10px;
 }
-@media screen and (min-width: 1200px) {
+/* @media screen and (min-width: 1200px) {
     .photo-card {
         width: 250px;
     }
-  }
+  } */
 
 .photo {
-    width: 130px;
+    width: 250px;
 
 }
 
-@media screen and (min-width: 1200px) {
+/* @media screen and (min-width: 1200px) {
     .photo {
         width: 250px;
     }
-  }
+  } */
 
 .info {
     display: flex;
