@@ -1,5 +1,5 @@
 import axios from "axios"
-import { totalHits } from "./index";
+import { totalHits } from "./index.js";
 
 
 export const perPage = 200

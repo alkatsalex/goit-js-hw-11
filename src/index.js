@@ -1,6 +1,6 @@
 // import axios from "axios"
 import Notiflix from 'notiflix';
-import { makeMarkup , fetchToData, perPage, totalHits} from "./respons"
+import { makeMarkup , fetchToData, perPage, totalHits} from "./respons.js"
 // Описаний в документації
 import SimpleLightbox from "simplelightbox";
 // Додатковий імпорт стилів
