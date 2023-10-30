@@ -1,5 +1,6 @@
-import axios from "axios"
-import { makeMarkup , fetchToData} from "./respons"
+// import axios from "axios"
+import Notiflix from 'notiflix';
+import { makeMarkup , fetchToData, perPage, totalHits} from "./respons"
 // Описаний в документації
 import SimpleLightbox from "simplelightbox";
 // Додатковий імпорт стилів
@@ -15,31 +16,33 @@ const el = {
 const API = "https://pixabay.com/api/";
 const KEY = "key=40269425-bc1c5bc659d3defa30c23ed22";
 let page = 1
-const perPage = 40
-let totalHits = 460
+export let totalHits = 500
 
 var lightbox = new SimpleLightbox('.gallery a', { /* options */ });
 
 el.form.addEventListener('submit', async (e) => {
+
 e.preventDefault()
-
-const inquiry = el.form.searchQuery.value
-
-// await axios.get(`${API}?${KEY}&q=${inquiry}&image_type=photo&per_page=${perPage}&page=${page}`)
-// .then(data => {
-// return console.log(data);
-// })
-
+const inquiry = el.form.searchQuery.value.trim()
+el.gallery.innerHTML = ""
+page =1 
+    totalHits = 500
 try {
-  const response = await fetchToData(inquiry)
-  console.log(response)
-  if (response.total === 0) {
- throw new Error('NO')
+  const response = await fetchToData(inquiry, page, perPage)
+//   console.log(response)
+  if (response.data.total === 0) {
+    Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
   }
+  if (response.data.hits.length < 40) {
+    el.btnLoadMore.classList.add('js-hiden');
+    makeMarkup(response.data.hits);
+    return
+}
   el.btnLoadMore.classList.remove('js-hiden')
-el.gallery.innerHTML = makeMarkup(response)
+
+el.gallery.innerHTML = makeMarkup(response.data.hits)
 } catch (error) {
-  console.error(error);
+    Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
 }
 
 lightbox.refresh()
@@ -52,28 +55,56 @@ e.preventDefault()
 console.log("click");
 el.btnLoadMore.classList.add('js-hiden')
 const inquiry = el.form.searchQuery.value
-totalHits -= perPage
+
+page += 1
+
+try{
+
 
 if (totalHits < perPage) {
-  const response = await fetchToData(inquiry, totalHits)
-  console.log(response);
-  el.btnLoadMore.classList.remove('js-hiden')
-  console.log(totalHits, perPage);
-  el.gallery.insertAdjacentHTML("beforeend", makeMarkup(response))
-  el.btnLoadMore.classList.add('js-hiden')
-} else {
-  const response = await fetchToData(inquiry, perPage)
-console.log(response);
+    el.btnLoadMore.classList.add('js-hiden');
+    Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
+    page =1 
+    totalHits = 500
+    return
+}
+const res = await fetchToData(inquiry, page, perPage)
+
 el.btnLoadMore.classList.remove('js-hiden')
 console.log(totalHits, perPage);
-el.gallery.insertAdjacentHTML("beforeend", makeMarkup(response))
-}
+el.gallery.insertAdjacentHTML("beforeend", makeMarkup(res.data.hits))
 
 lightbox.refresh()
+
+} catch (error) {
+    el.btnLoadMore.classList.add('js-hiden');
+    Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
+}
 
 })
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+// if (totalHits < perPage) {
+//     console.log(totalHits);
+//   const response = await fetchToData(inquiry, page, totalHits)
+//   console.log(response);
+//   el.btnLoadMore.classList.remove('js-hiden')
+//   console.log(totalHits, perPage);
+//   el.gallery.insertAdjacentHTML("beforeend", makeMarkup(response))
+//   el.btnLoadMore.classList.add('js-hiden')
+// } else {
+//   const response = await fetchToData(inquiry, page, perPage)
+// el.btnLoadMore.classList.remove('js-hiden')
+// console.log(totalHits, perPage);
+// el.gallery.insertAdjacentHTML("beforeend", makeMarkup(res))
+// }
+
+// if (totalHits <= 0) {
+//     el.btnLoadMore.classList.add('js-hiden')
+// }
+
+
 
 
 
